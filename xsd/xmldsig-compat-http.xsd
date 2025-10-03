@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+           targetNamespace="http://www.w3.org/2000/09/xmldsig#"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+  <!-- Aceita <ds:Signature> como anyType (não valida conteúdo interno) -->
+  <xs:element name="Signature" type="xs:anyType"/>
+</xs:schema>
+

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ArquivoFiscalizacao xmlns="http://portal.mec.gov.br/diplomadigital/arquivos-em-xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<infArquivoFiscalizacaoEmissora versao="1.05" ambiente="Produção">
+		<DataInicioFiscalizacao>2024-01-01</DataInicioFiscalizacao>
+		<IESEmissora>
+			<Nome>UNIVERSIDADE FEDERAL DE SANTA CATARINA</Nome>
+			<CodigoMEC>585</CodigoMEC>
+			<CNPJ>83899526000182</CNPJ>
+			<Endereco>
+				<Logradouro>Campus Universitário</Logradouro>
+				<Numero>s/n</Numero>
+				<Bairro>Trindade</Bairro>
+				<CodigoMunicipio>4205407</CodigoMunicipio>
+				<NomeMunicipio>Florianópolis</NomeMunicipio>
+				<UF>SC</UF>
+				<CEP>88040090</CEP>
+			</Endereco>
+			<Credenciamento>
+				<Tipo>Ato Próprio</Tipo>
+				<Numero>3849-C</Numero>
+				<Data>1960-12-18</Data>
+				<DataPublicacao>1960-12-21</DataPublicacao>
+				<SecaoPublicacao>1</SecaoPublicacao>
+				<PaginaPublicacao>16173</PaginaPublicacao>
+				<NumeroDOU>12345</NumeroDOU>
+			</Credenciamento>
+			<Recredenciamento>
+				<Tipo>Portaria</Tipo>
+				<Numero>134</Numero>
+				<Data>2013-02-27</Data>
+				<DataPublicacao>2013-02-28</DataPublicacao>
+				<SecaoPublicacao>1</SecaoPublicacao>
+				<PaginaPublicacao>32</PaginaPublicacao>
+				<NumeroDOU>3049</NumeroDOU>
+			</Recredenciamento>
+			<Mantenedora>
+				<RazaoSocial>UNIVERSIDADE FEDERAL DE SANTA CATARINA</RazaoSocial>
+				<CNPJ>83899526000182</CNPJ>
+				<Endereco>
+					<Logradouro>Campus Universitário</Logradouro>
+					<Numero>s/n</Numero>
+					<Bairro>Trindade</Bairro>
+					<CodigoMunicipio>4205407</CodigoMunicipio>
+					<NomeMunicipio>Florianópolis</NomeMunicipio>
+					<UF>SC</UF>
+					<CEP>88040090</CEP>
+				</Endereco>
+			</Mantenedora>
+		</IESEmissora>
+		<DiplomasFiscalizados>
+			<DiplomaFiscalizado>
+				<CodigoDiploma>585.585.e1bf7b0a765b4aff28f7209b68d0be2e9859808c5638c24b6ced0b81abc912b8</CodigoDiploma>
+				<CPFDetentor>05752676908</CPFDetentor>
+				<CodigoEMECCurso>1234</CodigoEMECCurso>
+				<DataEmissao>2024-02-20</DataEmissao>
+				<DataRegistro>2024-02-20</DataRegistro>
+				<URLXMLdoDiplomado>https://mec.usecerbrum.net/fiscalizacao/02_XMLDiplomado.xml</URLXMLdoDiplomado>
+				<URLRVDD>https://exemplo.ufsc.br/diplomas/585.585.e1bf7b0a7/diploma.pdf</URLRVDD>
+			</DiplomaFiscalizado>
+			<DiplomaFiscalizado>
+				<CodigoDiploma>585.585.f2ac8c1b876c5bff39f8310c79d1cf3f0960909d6749d35c7dfe1c92bcd023c9</CodigoDiploma>
+				<CPFDetentor>12345678901</CPFDetentor>
+				<CodigoEMECCurso>5678</CodigoEMECCurso>
+				<DataEmissao>2024-03-15</DataEmissao>
+				<DataRegistro>2024-03-15</DataRegistro>
+				<URLXMLdoDiplomado>https://mec.usecerbrum.net/fiscalizacao/01_XMLDiplomado.xml</URLXMLdoDiplomado>
+				<URLRVDD>https://exemplo.ufsc.br/diplomas/585.585.f2ac8c1b8/diploma.pdf</URLRVDD>
+			</DiplomaFiscalizado>
+		</DiplomasFiscalizados>
+		<DataFimFiscalizacao>2024-12-31</DataFimFiscalizacao>
+	</infArquivoFiscalizacaoEmissora>
+	<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+		<SignedInfo>
+			<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+			<SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+			<Reference URI="">
+				<Transforms>
+					<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+					<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+				</Transforms>
+				<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+				<DigestValue>jNTbJ6oaOiqEgvLFFIOVLpBsGdY=</DigestValue>
+			</Reference>
+		</SignedInfo>
+		<SignatureValue>erCeUWYUCgKZZqGorQ64QQmtD6qZ/3RXfKW2Iw7TsbHXJM8bqUzCl56mWibDEIruFAFN90MgY4zV6OycGt6qKFT2ShvLXtI+D1jrHc1l6yRSqbHiD76HbDxgvqfdZkGduOTYfUtXdwmnH09wborcGvVnn0LyTd0gbyP3PxyoapRaTSPSfFKchhKBHYxV0mUWlPSWdjMuemlvp0ezfFOw+a7OxjR0cs4PGUBWzHMx7l1DedPMZse6Vfdz3Hlfer8O62gAU+Tl+NKT86hjqNihNbpraX5u0WONoau9mEh/C87SR/f/SRQJbjTMNlYsVBcH/AHRf146pzybfStLe6VeGg==</SignatureValue>
+		<KeyInfo>
+			<X509Data>
+				<X509Certificate>MIIDXTCCAkWgAwIBAgIJAKJ5cZxqJqPFMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNVBAYTAkJSMRMwEQYDVQQIDApTb21lLVN0YXRlMSEwHwYDVQQKDBhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQwHhcNMjQwMTAxMDAwMDAwWhcNMjUwMTAxMDAwMDAwWjBFMQswCQYDVQQGEwJCUjETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqwerRx5cqwerqwerqwerqwerqwer</X509Certificate>
+			</X509Data>
+		</KeyInfo>
+	</Signature>
+</ArquivoFiscalizacao>

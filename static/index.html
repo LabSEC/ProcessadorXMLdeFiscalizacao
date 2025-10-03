@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validador de Fiscalização MEC - Diploma Digital</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header p { opacity: 0.9; font-size: 14px; }
+        .content { padding: 30px; flex: 1; }
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 30px;
+        }
+        .tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        .tab:hover { color: #667eea; }
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .upload-section { margin-bottom: 30px; }
+        .upload-area {
+            border: 3px dashed #ddd;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        .upload-area.drag-over {
+            border-color: #667eea;
+            background: #f0f2ff;
+        }
+        .upload-icon { font-size: 48px; margin-bottom: 15px; }
+        .upload-text { font-size: 16px; color: #333; margin-bottom: 10px; }
+        .upload-hint { font-size: 13px; color: #666; }
+        #fileInput, #fileInputReg { display: none; }
+        .file-list {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+        .file-name { flex: 1; font-size: 14px; margin-left: 10px; }
+        .file-remove {
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 5px 10px;
+        }
+        .btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .btn-export { background: #28a745; margin-top: 10px; }
+        .ies-files-list {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .ies-files-list h3 { margin-bottom: 15px; color: #333; }
+        .ies-file-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #28a745;
+        }
+        .ies-file-item.error {
+            border-left-color: #dc3545;
+            background: #fff5f5;
+        }
+        .ies-file-item.wrong-type {
+            border-left-color: #ffc107;
+            background: #fffbf0;
+        }
+        .ies-file-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .ies-file-checkbox {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+        .ies-file-name {
+            font-weight: 600;
+            flex: 1;
+        }
+        .ies-file-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+        .ies-info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .ies-info-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+        .ies-info-value {
+            font-size: 13px;
+            color: #333;
+        }
+        .data-container { display: flex; gap: 20px; margin-top: 30px; }
+        .sidebar { width: 280px; flex-shrink: 0; }
+        .table-container { 
+            flex: 1; 
+            min-width: 0;
+            overflow-x: auto;
+        }
+        .field-config {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .field-config h3 { margin-bottom: 15px; font-size: 16px; color: #333; }
+        .field-list { max-height: 400px; overflow-y: auto; }
+        .field-item {
+            padding: 8px;
+            margin-bottom: 5px;
+            background: white;
+            border-radius: 4px;
+            cursor: move;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .field-item:hover { background: #e9ecef; }
+        .field-item input[type="checkbox"] { cursor: pointer; }
+        .field-item label { cursor: pointer; flex: 1; font-size: 14px; }
+        .drag-handle { color: #999; font-size: 18px; }
+        .validation-report { margin-bottom: 30px; }
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .alert.success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+        .alert.error {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+        .alert.warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+        .file-validation {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .file-validation.error {
+            background: #fff5f5;
+            border-left: 4px solid #dc3545;
+        }
+        .validation-errors { margin-top: 10px; font-size: 13px; }
+        .validation-errors ul { margin: 10px 0; padding-left: 20px; }
+        .validation-errors li { margin-bottom: 5px; }
+        .loader { display: none; text-align: center; padding: 30px; }
+        .loader.active { display: block; }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer img {
+            height: 40px;
+            margin-bottom: 10px;
+        }
+        .footer p {
+            font-size: 13px;
+            color: #666;
+        }
+        @media (max-width: 1024px) {
+            .data-container { flex-direction: column; }
+            .sidebar { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Validador de Fiscalização MEC</h1>
+            <p>Sistema de Validação e Análise de Arquivos de Fiscalização - Diploma Digital v1.05</p>
+        </div>
+        <div class="content">
+            <div class="tabs">
+                <button class="tab active" data-tab="emissora">Emissora</button>
+                <button class="tab" data-tab="registradora">Registradora</button>
+            </div>
+            <div id="tab-emissora" class="tab-content active">
+                <div class="upload-section">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📁</div>
+                        <div class="upload-text">Clique ou arraste arquivos XML ou ZIP aqui</div>
+                        <div class="upload-hint">Suporta múltiplos arquivos XML ou arquivo ZIP com XMLs (Emissora)</div>
+                    </div>
+                    <input type="file" id="fileInput" multiple accept=".xml,.zip">
+                    <div id="fileList" style="display: none;"></div>
+                <button class="btn" id="processBtn" disabled style="margin-top: 20px;">Processar Arquivos</button>
+		</div>
+                <div class="loader" id="loader">
+                    <div class="spinner"></div>
+                    <p>Processando e validando arquivos...</p>
+                </div>
+                <div id="validationReport" class="validation-report"></div>
+                <div id="iesFilesList" style="display: none;"></div>
+                <div id="dataContainer" class="data-container" style="display: none;">
+                    <div class="sidebar">
+                        <div class="field-config">
+                            <h3>Configurar Colunas</h3>
+                            <div style="margin-bottom: 10px;">
+                                <button class="btn" style="width: 100%; padding: 8px;" onclick="selectAllFields()">Selecionar Todas</button>
+                                <button class="btn" style="width: 100%; padding: 8px; margin-top: 5px; background: #6c757d;" onclick="deselectAllFields()">Desmarcar Todas</button>
+                            </div>
+                            <div id="fieldList" class="field-list"></div>
+                        </div>
+                        <button class="btn btn-export" style="width: 100%;" onclick="exportToCSV()">Exportar CSV</button>
+                    </div>
+                    <div class="table-container">
+                        <table id="dataTable" class="display" style="width:100%"></table>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-registradora" class="tab-content">
+                <div class="upload-section">
+                    <div class="upload-area" id="uploadAreaReg">
+                        <div class="upload-icon">📁</div>
+                        <div class="upload-text">Clique ou arraste arquivos XML ou ZIP aqui</div>
+                        <div class="upload-hint">Suporta múltiplos arquivos XML ou arquivo ZIP com XMLs (Registradora)</div>
+                    </div>
+                    <input type="file" id="fileInputReg" multiple accept=".xml,.zip">
+                    <div id="fileListReg" style="display: none;"></div>
+                <button class="btn" id="processBtnReg" disabled style="margin-top: 20px;">Processar Arquivos</button>
+		</div>
+                <div class="loader" id="loaderReg">
+                    <div class="spinner"></div>
+                    <p>Processando e validando arquivos...</p>
+                </div>
+                <div id="validationReportReg" class="validation-report"></div>
+                <div id="iesFilesListReg" style="display: none;"></div>
+                <div id="dataContainerReg" class="data-container" style="display: none;">
+                    <div class="sidebar">
+                        <div class="field-config">
+                            <h3>Configurar Colunas</h3>
+                            <div style="margin-bottom: 10px;">
+                                <button class="btn" style="width: 100%; padding: 8px;" onclick="selectAllFieldsReg()">Selecionar Todas</button>
+                                <button class="btn" style="width: 100%; padding: 8px; margin-top: 5px; background: #6c757d;" onclick="deselectAllFieldsReg()">Desmarcar Todas</button>
+                            </div>
+                            <div id="fieldListReg" class="field-list"></div>
+                        </div>
+                        <button class="btn btn-export" style="width: 100%;" onclick="exportToCSVReg()">Exportar CSV</button>
+                    </div>
+                    <div class="table-container">
+                        <table id="dataTableReg" class="display" style="width:100%"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+              <a href="https://www.cerbrum.com" target="blank"> <img src="./images/logo_gedai_2.jpg" alt="GEDAI"></a>
+	       <p>GEDAI by Cerbrum</p>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+
